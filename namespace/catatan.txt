@@ -1,0 +1,2 @@
+namespace digunakan untuk mengelompokkan modul, 
+yg apabila ada nama class yang sama dengan namespace mudah untuk menghandlenya

@@ -10,5 +10,5 @@ $infoProduk->tambahProduk($produk1);
 $infoProduk->tambahProduk($produk2);
 echo $infoProduk->cetak();
 
-echo "<hr>";
+echo "<hr>";    
 new Coba();
