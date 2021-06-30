@@ -1,10 +1,17 @@
 <?php 
-class produk {
+
+// class abstract tidak bisa diinstansiasi sebagai objek
+// minimal punya 1 method abstrack dan methodnya tidak boleh memiliki implemntrasi, hanya berupa interface
+
+abstract class produk {
     private $judul,
             $penulis,
             $penerbit,
             $harga,
             $diskon = 0;
+
+    // method ini harus ad di setiap child class nya
+    abstract public function getInfoProduk();
 
     public function __construct($judul = "judul", $penulis = "penulis", $penerbit = "penerbit", $harga=0){
         $this->judul = $judul;
@@ -17,7 +24,7 @@ class produk {
         return "$this->penulis, $this->penerbit";
     }
 
-    public function getInfoProduk(){
+    public function infoProduk(){
         $str = "{$this->judul} | {$this->getlabel()}, (Rp. {$this->harga})";
 
         return $str;
@@ -72,7 +79,7 @@ class Komik extends Produk {
 
     public function getInfoProduk(){
         // parent itu merujuk ke class parentnya atau class produk
-        $str = "Komik : " . parent::getInfoProduk(). "- {$this->jmlHalaman} Halaman";
+        $str = "Komik : " . $this->infoProduk(). "- {$this->jmlHalaman} Halaman";
 
         return $str;
     }
@@ -88,7 +95,7 @@ class Game extends Produk {
     }
 
     public function getInfoProduk(){
-        $str = "Game : ". parent::getInfoProduk() ." ~ {$this->waktuMain} Jam";
+        $str = "Game : ". $this->infoProduk() ." ~ {$this->waktuMain} Jam";
 
         return $str;
     }
@@ -106,10 +113,9 @@ class CetakInfoProduk {
     public function cetak(){
         $str = "DAFTAR PRODUK <br>";
 
-        foreach ($daftarProduk as $p){
-            $str .= "- {}"
+        foreach ($this->daftarProduk as $p){
+            $str .= "- {$p->getInfoProduk()} <br>";
         }
-
 
         return $str;
     }
@@ -119,3 +125,9 @@ class CetakInfoProduk {
 $produk1 = new Komik("Naruto", "Masashi Kishimoto", "Shonen Jump", 30000, 100);
 $produk2 = new Game("Uncharter", "Neil Druckman", "Sony Computer", 250000, 50);
 $produk3 = new Komik("One piece", "Oda", "Shonen Jump", "500000", 900);
+
+$infoProduk = new CetakInfoProduk();
+$infoProduk->tambahProduk($produk1);
+$infoProduk->tambahProduk($produk2);
+echo $infoProduk->cetak();
+
